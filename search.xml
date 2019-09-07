@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+    
+    <entry>
+      <title><![CDATA[归并排序+快速排序]]></title>
+      <url>/2019/09/07/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/</url>
+      <content type="html"><![CDATA[<h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><h2 id="思想："><a href="#思想：" class="headerlink" title="思想："></a>思想：</h2><p>快速排序的思想就是首先给定一个基准数据，然后帮助这个基准数据在整个数组中找到正确的位置。当找到第一个基准数据的正确位置后，再在左右两边分别给定一个基准数据并找到正确位置，直到排序完成。</p>
+<a id="more"></a>
+<ol>
+<li>首先选择一个数作为基准数据p，小于p的数放在左边，大于p的数放在右边。</li>
+<li>递归的将p左边的数和右边的数都按照第一步的思想进行，直到不能递归，那么排序便完成了。</li>
+</ol>
+<p>时间复杂度： O(nlogn)</p>
+<p>我用<a href="https://leetcode-cn.com/problems/sort-an-array/submissions/" target="_blank" rel="noopener">leetcode912</a> 这个题目作为例子附上代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    void quick_sort(vector&lt;int&gt;&amp; nums, int l, int r)</span><br><span class="line">    &#123;</span><br><span class="line">	if (l &gt;= r) return;</span><br><span class="line">	</span><br><span class="line">	int i = l-1, j = r+1, k = nums[(l+r) &gt;&gt; 1];</span><br><span class="line">	</span><br><span class="line">	while (i &lt; j)</span><br><span class="line">	&#123;</span><br><span class="line">	    do ++i; while (nums[i] &lt; k);</span><br><span class="line">	    do --j; while (nums[j] &gt; k);</span><br><span class="line">	    if (i &lt; j) swap(nums[i], nums[j]);</span><br><span class="line">	&#125; </span><br><span class="line">	</span><br><span class="line">	quick_sort(nums, l, j); </span><br><span class="line">	quick_sort(nums, j+1, r);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    vector&lt;int&gt; sortArray(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">	int n = nums.size();</span><br><span class="line">	quick_sort(nums, 0, n-1);</span><br><span class="line">	</span><br><span class="line">	return nums;</span><br><span class="line">	</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h1><h2 id="思想：-1"><a href="#思想：-1" class="headerlink" title="思想："></a>思想：</h2><p>归并排序是典型的基于分治的递归算法。它不断的把原数组分成两个大小相等的小数组（大小可能相差1），当子数组被划分为1时，那么小数组是有序的，从这个时候开始开始回溯，将小的有序数组合并成大的有序数组。</p>
+<ol>
+<li>首先将数组分成左右两部分，直到分到最小部分（也就是数组大小为1）的时候。</li>
+<li>开始回溯，由将左右两部分已经排好序的数组合并成一个排序大数组（在这里借助一个临时数组来保存这个大数组，通过比较两个左右两个排序好了的小数组来把从小到大的顺序数放到临时数组中， 这样做比较简便。）</li>
+<li>当回溯到起始的原数组时，那么这个时候数组已经排好了序。</li>
+</ol>
+<p>时间复杂度： O(nlogn)</p>
+<p>同样以<a href="https://leetcode-cn.com/problems/sort-an-array/submissions/" target="_blank" rel="noopener">leetcode912</a> 这个题目作为例子附上代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">	public:</span><br><span class="line">	    vector&lt;int&gt; tmp;</span><br><span class="line">	    </span><br><span class="line">	    void merge_sort(vector&lt;int&gt;&amp; nums, int l, int r)</span><br><span class="line">	    &#123;</span><br><span class="line">		if (l &gt;= r) return;</span><br><span class="line">		int mid = (l+r) &gt;&gt; 1;</span><br><span class="line">		</span><br><span class="line">		merge_sort(nums, l, mid); merge_sort(nums, mid+1, r);</span><br><span class="line">		</span><br><span class="line">		int i = l, j = mid+1, k = 0;</span><br><span class="line">		</span><br><span class="line">		while (i &lt;= mid &amp;&amp; j &lt;= r) </span><br><span class="line">		&#123;</span><br><span class="line">		    if (nums[i] &lt;= nums[j]) tmp[k++] = nums[i++];</span><br><span class="line">		    else tmp[k++] = nums[j++];</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		while (i &lt;= mid) tmp[k++] = nums[i++];</span><br><span class="line">		while (j &lt;= r) tmp[k++] = nums[j++];</span><br><span class="line">		</span><br><span class="line">		for (i = l, k = 0; i &lt;= r; ++ i, ++ k ) nums[i] = tmp[k];</span><br><span class="line">	    &#125;</span><br><span class="line">	    </span><br><span class="line">	    vector&lt;int&gt; sortArray(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">		int n = nums.size();</span><br><span class="line">		tmp.resize(n);</span><br><span class="line">		merge_sort(nums, 0, n-1);</span><br><span class="line">		</span><br><span class="line">		return nums;</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      
+        
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+  
+  
+</search>
